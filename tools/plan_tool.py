@@ -66,7 +66,7 @@ def discuss_and_plan(topic=""):
             console.print(f"[bold red]│ ✖ Error connecting to Architect:[/bold red] [white]{str(e)}[/white]")
             return "Discussion failed due to error."
 
-        user_input = console.input(f"[bold green]╭─ You[/bold green]\n[bold green]╰─❯ [/bold green]")
+        user_input = console.input(f"[bold magenta]╭─ You[/bold magenta]\n[bold magenta]╰─❯ [/bold magenta]")
 
         if user_input.lower() == 'cancel':
             console.print(f"[bold red]│ ✖ Discussion cancelled.[/bold red]")
@@ -80,13 +80,13 @@ def discuss_and_plan(topic=""):
             payload["messages"] = messages
 
             try:
-                with console.status("[bold green]...generating final blueprint...[/bold green]", spinner="bouncingBar"):
+                with console.status("[bold purple]...generating final blueprint...[/bold purple]", spinner="bouncingBar"):
                     resp = requests.post(MODEL_API_URL, headers=headers, json=payload, timeout=60)
                     resp.raise_for_status()
                     final_plan = resp.json()["choices"][0]["message"]["content"]
                 
-                final_title = "[bold green]🚀 FINAL BLUEPRINT SECURED[/bold green]"
-                final_panel = Panel(final_title, border_style="green", expand=False, padding=(1, 2))
+                final_title = "[bold magenta]🚀 FINAL BLUEPRINT SECURED[/bold magenta]"
+                final_panel = Panel(final_title, border_style="magenta", expand=False, padding=(1, 2))
                 console.print()
                 console.print(final_panel)
                 console.print(Markdown(final_plan))

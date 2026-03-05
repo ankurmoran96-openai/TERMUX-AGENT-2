@@ -40,21 +40,21 @@ from config import MODEL_API_URL, MODEL_API_KEY, MODEL_NAME, SYSTEM_PROMPT, CLI_
 def print_banner():
     os.system('clear' if os.name == 'posix' else 'cls')
     
-    logo = """[bold cyan]
+    logo = """[bold magenta]
 ██████╗ ██████╗  █████╗ ██╗  ██╗███╗   ███╗ ██████╗ ███████╗
 ██╔══██╗██╔══██╗██╔══██╗██║  ██║████╗ ████║██╔═══██╗██╔════╝
 ██████╔╝██████╔╝███████║███████║██╔████╔██║██║   ██║███████╗
 ██╔══██╗██╔══██╗██╔══██║██╔══██║██║╚██╔╝██║██║   ██║╚════██║
 ██████╔╝██║  ██║██║  ██║██║  ██║██║ ╚═╝ ██║╚██████╔╝███████║
 ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
-[/bold cyan]"""
+[/bold magenta]"""
     
-    credits_line = f" [white]Made By Ankur Moran[/white]  |  [cyan]TG:[/cyan] [white]@Ankxrrrr[/white]  |  [cyan]IG:[/cyan] [white]_ankurmoran_[/white] "
+    credits_line = f" [white]Made By Ankur Moran[/white]  |  [magenta]TG:[/magenta] [white]@Ankxrrrr[/white]  |  [magenta]IG:[/magenta] [white]_ankurmoran_[/white] "
     version_line = f" [dim]CLI Version: {VERSION}  |  Engine: {MODEL_NAME}[/dim]"
     
     panel = Panel(
         f"{logo}\n{credits_line}\n{version_line}",
-        border_style="cyan",
+        border_style="purple",
         expand=False,
         padding=(1, 4)
     )
@@ -67,13 +67,13 @@ def log_brahmos(msg):
     if not msg:
         return
     md = Markdown(msg)
-    panel = Panel(md, title="[bold cyan]BrahMos[/bold cyan]", title_align="left", border_style="cyan", expand=False)
+    panel = Panel(md, title="[bold magenta]BrahMos[/bold magenta]", title_align="left", border_style="purple", expand=False)
     console.print()
     console.print(panel)
     console.print()
 
 def log_tool(msg):
-    console.print(f"[bold magenta]│ ⚙ TOOL:[/bold magenta] [white]{msg}[/white]")
+    console.print(f"[bold purple]│ ⚙ TOOL:[/bold purple] [white]{msg}[/white]")
 
 def log_error(msg):
     console.print(f"[bold red]│ ✖ ERROR:[/bold red] [white]{msg}[/white]")
@@ -158,24 +158,24 @@ def main():
     os.makedirs("Workspace", exist_ok=True)
     
     print_banner()
-    console.print(f" [cyan]├─[/cyan] [white]System:[/white] {os_info}")
-    console.print(f" [cyan]├─[/cyan] [white]Location:[/white] {os.path.abspath(current_working_dir)}")
-    console.print(f" [cyan]└─[/cyan] [white]Status:[/white] [bold green]Active & Awaiting Directives[/bold green]\n")
+    console.print(f" [purple]├─[/purple] [white]System:[/white] {os_info}")
+    console.print(f" [purple]├─[/purple] [white]Location:[/white] {os.path.abspath(current_working_dir)}")
+    console.print(f" [purple]└─[/purple] [white]Status:[/white] [bold magenta]Active & Awaiting Directives[/bold magenta]\n")
     
     messages = [{"role": "system", "content": f"{SYSTEM_PROMPT}\nENV: {os_info}"}]
     
     while True:
         try:
-            prompt = f"\n[bold green]╭─ You[/bold green] [dim]({os.path.basename(os.path.abspath(current_working_dir))})[/dim]\n[bold green]╰─❯ [/bold green]"
+            prompt = f"\n[bold magenta]╭─ You[/bold magenta] [dim]({os.path.basename(os.path.abspath(current_working_dir))})[/dim]\n[bold magenta]╰─❯ [/bold magenta]"
             user_input = console.input(prompt)
             
             if user_input.lower() in ["exit", "quit", "clear"]:
                 if user_input.lower() == "clear":
                     os.system('clear')
                     print_banner()
-                    console.print(f" [cyan]├─[/cyan] [white]System:[/white] {os_info}")
-                    console.print(f" [cyan]├─[/cyan] [white]Location:[/white] {os.path.abspath(current_working_dir)}")
-                    console.print(f" [cyan]└─[/cyan] [white]Status:[/white] [bold green]Active & Awaiting Directives[/bold green]\n")
+                    console.print(f" [purple]├─[/purple] [white]System:[/white] {os_info}")
+                    console.print(f" [purple]├─[/purple] [white]Location:[/white] {os.path.abspath(current_working_dir)}")
+                    console.print(f" [purple]└─[/purple] [white]Status:[/white] [bold magenta]Active & Awaiting Directives[/bold magenta]\n")
                     continue
                 break
                 
@@ -183,15 +183,15 @@ def main():
                 # Quick manual cd command for the user
                 new_path = user_input.split(" ", 1)[1].strip()
                 res = change_directory(new_path)
-                console.print(f"[bold cyan]│[/bold cyan] {res}")
+                console.print(f"[bold purple]│[/bold purple] {res}")
                 continue
 
             if user_input.lower() in ["/shell", "shell"]:
-                console.print("\n[bold cyan]╭───────────────────────────────────────────────────╮[/bold cyan]")
-                console.print(f"[bold cyan]│[/bold cyan] [bold white]Entering Interactive Shell...[/bold white]                     [bold cyan]│[/bold cyan]")
-                console.print(f"[bold cyan]│[/bold cyan] [white]Location: {os.path.abspath(current_working_dir)[:35]:<35}[/white] [bold cyan]│[/bold cyan]")
-                console.print("[bold cyan]│[/bold cyan] [bold white]Type 'exit' or press Ctrl+D to return to BrahMos.[/bold white] [bold cyan]│[/bold cyan]")
-                console.print("[bold cyan]╰───────────────────────────────────────────────────╯[/bold cyan]\n")
+                console.print("\n[bold purple]╭───────────────────────────────────────────────────╮[/bold purple]")
+                console.print(f"[bold purple]│[/bold purple] [bold white]Entering Interactive Shell...[/bold white]                     [bold purple]│[/bold purple]")
+                console.print(f"[bold purple]│[/bold purple] [white]Location: {os.path.abspath(current_working_dir)[:35]:<35}[/white] [bold purple]│[/bold purple]")
+                console.print("[bold purple]│[/bold purple] [bold white]Type 'exit' or press Ctrl+D to return to BrahMos.[/bold white] [bold purple]│[/bold purple]")
+                console.print("[bold purple]╰───────────────────────────────────────────────────╯[/bold purple]\n")
                 
                 cwd = os.getcwd()
                 os.chdir(current_working_dir)
@@ -199,7 +199,7 @@ def main():
                 os.system(shell_exec)
                 os.chdir(cwd)
                 
-                console.print("\n[bold green]Returned to BrahMos. Awaiting Directives.[/bold green]")
+                console.print("\n[bold magenta]Returned to BrahMos. Awaiting Directives.[/bold magenta]")
                 continue
             
             if not user_input.strip():
@@ -207,7 +207,7 @@ def main():
                 
             messages.append({"role": "user", "content": user_input})
             
-            with console.status("[bold blue]...processing...[/bold blue]", spinner="dots"):
+            with console.status("[bold purple]...processing...[/bold purple]", spinner="dots"):
                 while True:
                     response = get_brahmos_response(messages)
                     messages.append(response)
