@@ -5,7 +5,7 @@ setup(
     version="4.5.0",
     author="@Ankxrrrr",
     description="The ultimate autonomous system orchestrator.",
-    packages=find_packages(),
+    packages=["tools"],
     py_modules=["main", "config"],
     install_requires=[
         "colorama",
