@@ -40,15 +40,23 @@ from config import MODEL_API_URL, MODEL_API_KEY, MODEL_NAME, SYSTEM_PROMPT, CLI_
 def print_banner():
     os.system('clear' if os.name == 'posix' else 'cls')
     
-    title_line = f"[bold cyan]⚡ BRAHMOS CORE[/bold cyan] ❯ [white]{CLI_NAME} {VERSION}[/white]"
-    dev_line = f"[bold cyan]👤 DEVELOPER [/bold cyan] : [white]{DEVELOPER}[/white]"
-    engine_line = f"[bold cyan]🧠 ENGINE    [/bold cyan] : [white]{MODEL_NAME}[/white]"
+    logo = """[bold cyan]
+██████╗ ██████╗  █████╗ ██╗  ██╗███╗   ███╗ ██████╗ ███████╗
+██╔══██╗██╔══██╗██╔══██╗██║  ██║████╗ ████║██╔═══██╗██╔════╝
+██████╔╝██████╔╝███████║███████║██╔████╔██║██║   ██║███████╗
+██╔══██╗██╔══██╗██╔══██║██╔══██║██║╚██╔╝██║██║   ██║╚════██║
+██████╔╝██║  ██║██║  ██║██║  ██║██║ ╚═╝ ██║╚██████╔╝███████║
+╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝ ╚═════╝ ╚══════╝
+[/bold cyan]"""
+    
+    credits_line = f" [white]Made By Ankur Moran[/white]  |  [cyan]TG:[/cyan] [white]@Ankxrrrr[/white]  |  [cyan]IG:[/cyan] [white]_ankurmoran_[/white] "
+    version_line = f" [dim]CLI Version: {VERSION}  |  Engine: {MODEL_NAME}[/dim]"
     
     panel = Panel(
-        f"{title_line}\n{dev_line}\n{engine_line}",
+        f"{logo}\n{credits_line}\n{version_line}",
         border_style="cyan",
         expand=False,
-        padding=(1, 2)
+        padding=(1, 4)
     )
     console.print(panel)
 

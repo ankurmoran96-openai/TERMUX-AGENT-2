@@ -1,6 +1,8 @@
-# ⚡ BrahMos Core (God Mode AI CLI)
+# ⚡ BrahMos (AI Agent CLI)
 
-BrahMos is an autonomous, terminal-based AI orchestrator capable of reading, writing, planning, and executing complex software engineering tasks directly on your machine.
+**Made By Ankur Moran** | **TG:** @Ankxrrrr | **IG:** \_ankurmoran\_
+
+BrahMos is a professional, autonomous, terminal-based AI orchestrator capable of reading, writing, planning, and executing complex software engineering tasks directly on your machine. 
 
 ## ✨ Features
 * **Modern Rich UI**: Fully animated terminal interface with Markdown parsing and syntax highlighting.
