@@ -16,7 +16,7 @@ MODEL_API_KEY = "sk-av-v1-noq_Ig2pG6epdhC880sybnd4Sb_j2zs4ZiZUj5tDK05HqhLgy7Gcww
 # Branding
 CLI_NAME = "BrahMos"
 DEVELOPER = "@Ankxrrrr"
-VERSION = "v4.5-GOD-MODE-ELITE"
+VERSION = "v4.5.1-GOD-MODE-ELITE"
 
 # God Mode System Prompt (Enhanced Debugging)
 SYSTEM_PROMPT = (
