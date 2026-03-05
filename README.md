@@ -8,6 +8,7 @@ BrahMos is an autonomous, terminal-based AI orchestrator capable of reading, wri
 * **Interactive Architect Mode**: Uses GPT-4o to brainstorm and map out project blueprints before executing them.
 * **Dynamic Navigation**: Move the AI seamlessly through your file system using `/cd path/to/folder`.
 * **Sub-Shell Drop-in**: Use the `/shell` command to instantly drop into an interactive terminal in your active workspace without breaking context.
+* **GitHub Integration**: Ask the AI to push your projects straight to GitHub! Just provide a token and an empty repo, and it handles the git commands.
 * **Auto-dependency Resolution**: Never worry about missing packages; the system installs what it needs dynamically.
 
 ## 🚀 Installation
