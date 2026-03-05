@@ -12,39 +12,22 @@ BrahMos is an autonomous, terminal-based AI orchestrator capable of reading, wri
 
 ## 🚀 Installation
 
-You can install BrahMos directly via `pip`. This will automatically download the code, install dependencies, and register the global `brahmos` command.
+You can install BrahMos directly from GitHub. This will automatically download the code, install dependencies, and register the global `brahmos` command on your system.
 
+**Run this single command in your terminal:**
 ```bash
-# Clone the repository
-git clone https://github.com/YourUsername/BrahMos.git
-
-# Enter directory
-cd BrahMos
-
-# Install the package globally
-pip install -e .
-```
-
-## 🔑 Setup
-
-BrahMos requires an API key to function.
-
-1. Create a `.env` file in the directory where you plan to run BrahMos (or copy the example).
-```bash
-cp .env.example .env
-```
-2. Open the `.env` file and paste your API key:
-```env
-BRAHMOS_API_KEY="your_api_key_here"
+pip install git+https://github.com/ankurmoran96-openai/TERMUX-AGENT-2.git
 ```
 
 ## 💻 Usage
 
-Once installed, you can launch the AI from anywhere in your terminal by simply typing:
+Once the installation finishes, you can launch the AI from anywhere in your terminal by simply typing:
 
 ```bash
 brahmos
 ```
+
+*(Note: The API key is currently built-in for immediate use. You do not need to configure any `.env` files right now!)*
 
 ### Commands
 * `/cd <path>` - Change the directory the AI is actively working in.
