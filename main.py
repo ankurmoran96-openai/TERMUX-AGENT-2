@@ -33,6 +33,7 @@ from tools.shell_tool import run_shell
 from tools.file_tool import list_files, read_file, write_file
 from tools.web_tool import google_search, web_browse
 from tools.plan_tool import discuss_and_plan
+from tools.input_tool import ask_user_input
 
 from config import MODEL_API_URL, MODEL_API_KEY, MODEL_NAME, SYSTEM_PROMPT, CLI_NAME, DEVELOPER, VERSION
 
@@ -117,7 +118,8 @@ TOOLS = {
     "change_directory": change_directory,
     "google_search": google_search,
     "web_browse": web_browse,
-    "discuss_and_plan": discuss_and_plan
+    "discuss_and_plan": discuss_and_plan,
+    "ask_user_input": ask_user_input
 }
 
 # --- API Interaction ---
@@ -136,7 +138,8 @@ def get_brahmos_response(messages):
         {"type": "function", "function": {"name": "read_file", "description": "Read file contents.", "parameters": {"type": "object", "properties": {"file_path": {"type": "string"}}, "required": ["file_path"]}}},
         {"type": "function", "function": {"name": "write_file", "description": "Create/update files.", "parameters": {"type": "object", "properties": {"file_path": {"type": "string"}, "content": {"type": "string"}}, "required": ["file_path", "content"]}}},
         {"type": "function", "function": {"name": "change_directory", "description": "Change the current working directory for the AI. Use this when the user gives you access to a different folder.", "parameters": {"type": "object", "properties": {"path": {"type": "string", "description": "The path to change to."}}, "required": ["path"]}}},
-        {"type": "function", "function": {"name": "discuss_and_plan", "description": "Enter an interactive chat with the user using gpt-4o to brainstorm and plan a project. Returns the final blueprint.", "parameters": {"type": "object", "properties": {"topic": {"type": "string", "description": "Optional initial topic to discuss"}}, "required": []}}}
+        {"type": "function", "function": {"name": "discuss_and_plan", "description": "Enter an interactive chat with the user using gpt-4o to brainstorm and plan a project. Returns the final blueprint.", "parameters": {"type": "object", "properties": {"topic": {"type": "string", "description": "Optional initial topic to discuss"}}, "required": []}}},
+        {"type": "function", "function": {"name": "ask_user_input", "description": "Ask the user for specific input, such as a missing API key, token, password, or setting. If it is a secret (like a password or token), set is_secret to true so the user's input is hidden.", "parameters": {"type": "object", "properties": {"prompt_message": {"type": "string", "description": "The question or prompt to show the user."}, "is_secret": {"type": "boolean", "description": "Set to true if asking for a password/token to hide their typing."}}, "required": ["prompt_message"]}}}
     ]
 
     payload = {
