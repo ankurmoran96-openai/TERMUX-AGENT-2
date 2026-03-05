@@ -156,7 +156,12 @@ def get_brahmos_response(messages):
     try:
         resp = requests.post(MODEL_API_URL, headers=headers, json=payload, timeout=60)
         resp.raise_for_status()
-        return resp.json()["choices"][0]["message"]
+        
+        try:
+            return resp.json()["choices"][0]["message"]
+        except (KeyError, json.JSONDecodeError) as e:
+            return {"role": "assistant", "content": f"BrahMos API Error: Unexpected response format: {resp.text[:200]}"}
+            
     except Exception as e:
         return {"role": "assistant", "content": f"BrahMos API Error: {str(e)}"}
 
@@ -215,13 +220,16 @@ def main():
             messages.append({"role": "user", "content": user_input})
             
             turn_count = 0
-            max_turns = 15
+            max_turns = 10
             
             with console.status("[bold purple]...processing...[/bold purple]", spinner="dots"):
                 while turn_count < max_turns:
                     turn_count += 1
                     response = get_brahmos_response(messages)
                     messages.append(response)
+                    
+                    if response.get("content"):
+                        log_brahmos(response["content"])
                     
                     if "tool_calls" in response and response["tool_calls"]:
                         for tool_call in response["tool_calls"]:
@@ -261,8 +269,6 @@ def main():
                 
                 if turn_count >= max_turns:
                     log_error("Maximum autonomous turns reached. Pausing for safety.")
-            
-            log_brahmos(response.get('content', ''))
             
         except KeyboardInterrupt:
             console.print(f"\n[bold red]Safe shutdown initiated.[/bold red]")

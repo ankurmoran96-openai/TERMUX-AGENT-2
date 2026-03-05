@@ -53,7 +53,12 @@ def discuss_and_plan(topic=""):
             with console.status("[bold magenta]...architect is typing...[/bold magenta]", spinner="dots"):
                 resp = requests.post(MODEL_API_URL, headers=headers, json=payload, timeout=30)
                 resp.raise_for_status()
-                reply = resp.json()["choices"][0]["message"]["content"]
+                
+                try:
+                    reply = resp.json()["choices"][0]["message"]["content"]
+                except (KeyError, json.JSONDecodeError):
+                    reply = f"API Error: Unexpected response format: {resp.text[:200]}"
+                    
                 messages.append({"role": "assistant", "content": reply})
 
             md = Markdown(reply)
@@ -66,7 +71,11 @@ def discuss_and_plan(topic=""):
             console.print(f"[bold red]│ ✖ Error connecting to Architect:[/bold red] [white]{str(e)}[/white]")
             return "Discussion failed due to error."
 
-        user_input = console.input(f"[bold magenta]╭─ You[/bold magenta]\n[bold magenta]╰─❯ [/bold magenta]")
+        try:
+            user_input = console.input(f"[bold magenta]╭─ You[/bold magenta]\n[bold magenta]╰─❯ [/bold magenta]")
+        except KeyboardInterrupt:
+            console.print(f"\n[bold red]│ ✖ Discussion cancelled by user.[/bold red]")
+            return "User cancelled the discussion."
 
         if user_input.lower() == 'cancel':
             console.print(f"[bold red]│ ✖ Discussion cancelled.[/bold red]")
@@ -83,7 +92,11 @@ def discuss_and_plan(topic=""):
                 with console.status("[bold purple]...generating final blueprint...[/bold purple]", spinner="bouncingBar"):
                     resp = requests.post(MODEL_API_URL, headers=headers, json=payload, timeout=60)
                     resp.raise_for_status()
-                    final_plan = resp.json()["choices"][0]["message"]["content"]
+                    
+                    try:
+                        final_plan = resp.json()["choices"][0]["message"]["content"]
+                    except (KeyError, json.JSONDecodeError):
+                        return f"API Error: Unexpected response format: {resp.text[:200]}"
                 
                 final_title = "[bold magenta]🚀 FINAL BLUEPRINT SECURED[/bold magenta]"
                 final_panel = Panel(final_title, border_style="magenta", expand=False, padding=(1, 2))

@@ -11,7 +11,10 @@ except ImportError:
 def google_search(query, num_results=5):
     """Searches Google and returns a list of URLs."""
     try:
-        results = list(search(query, num_results=num_results))
+        # Pass timeout to prevent hanging, handle empty list
+        results = list(search(query, num_results=num_results, sleep_interval=1, timeout=10))
+        if not results:
+            return "No results found for that query."
         return "\n".join(results)
     except Exception as e:
         return f"Search Error: {str(e)}"
