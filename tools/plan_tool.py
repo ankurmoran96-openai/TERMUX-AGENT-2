@@ -61,8 +61,8 @@ def discuss_and_plan(topic=""):
                     
                 messages.append({"role": "assistant", "content": reply})
 
-            md = Markdown(reply)
-            msg_panel = Panel(md, title="[bold magenta]Architect[/bold magenta]", title_align="left", border_style="magenta", expand=False)
+            md = Markdown(reply, justify="left")
+            msg_panel = Panel(md, title="[bold magenta]Architect[/bold magenta]", title_align="left", border_style="magenta", expand=True)
             console.print()
             console.print(msg_panel)
             console.print()

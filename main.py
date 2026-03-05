@@ -71,8 +71,8 @@ def get_timestamp():
 def log_brahmos(msg):
     if not msg:
         return
-    md = Markdown(msg)
-    panel = Panel(md, title="[bold magenta]BrahMos[/bold magenta]", title_align="left", border_style="purple", expand=False)
+    md = Markdown(msg, justify="left")
+    panel = Panel(md, title="[bold magenta]BrahMos[/bold magenta]", title_align="left", border_style="purple", expand=True)
     console.print()
     console.print(panel)
     console.print()
