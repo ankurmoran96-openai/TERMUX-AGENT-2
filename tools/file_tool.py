@@ -4,6 +4,8 @@ def list_files(path="Workspace"):
     """Lists files in the specified directory."""
     try:
         files = os.listdir(path)
+        if not files:
+            return "Directory is empty."
         return "\n".join(files)
     except Exception as e:
         return f"Error listing files: {str(e)}"

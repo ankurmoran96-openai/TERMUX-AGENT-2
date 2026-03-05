@@ -3,14 +3,17 @@ import sys
 import os
 import subprocess
 import platform
+import shutil
 from datetime import datetime
 
 # --- Auto-Install Dependencies ---
 def ensure_dependencies():
     required = ["colorama", "requests", "beautifulsoup4", "googlesearch-python", "rich"]
     for pkg in required:
+        # Map package name to import name
+        import_name = "bs4" if pkg == "beautifulsoup4" else "googlesearch" if pkg == "googlesearch-python" else pkg
         try:
-            __import__(pkg if pkg != "beautifulsoup4" else "bs4" if pkg != "googlesearch-python" else "googlesearch")
+            __import__(import_name)
         except ImportError:
             print(f"[!] Installing required package: {pkg}...")
             subprocess.run([sys.executable, "-m", "pip", "install", pkg], capture_output=True)
@@ -151,7 +154,7 @@ def get_brahmos_response(messages):
     }
     
     try:
-        resp = requests.post(MODEL_API_URL, headers=headers, json=payload)
+        resp = requests.post(MODEL_API_URL, headers=headers, json=payload, timeout=60)
         resp.raise_for_status()
         return resp.json()["choices"][0]["message"]
     except Exception as e:
@@ -199,7 +202,7 @@ def main():
                 
                 cwd = os.getcwd()
                 os.chdir(current_working_dir)
-                shell_exec = os.environ.get("SHELL", "/bin/bash" if os.path.exists("/bin/bash") else "sh")
+                shell_exec = shutil.which("bash") or shutil.which("sh") or os.environ.get("SHELL", "sh")
                 os.system(shell_exec)
                 os.chdir(cwd)
                 
@@ -211,8 +214,12 @@ def main():
                 
             messages.append({"role": "user", "content": user_input})
             
+            turn_count = 0
+            max_turns = 15
+            
             with console.status("[bold purple]...processing...[/bold purple]", spinner="dots"):
-                while True:
+                while turn_count < max_turns:
+                    turn_count += 1
                     response = get_brahmos_response(messages)
                     messages.append(response)
                     
@@ -241,9 +248,19 @@ def main():
                                     "name": func_name,
                                     "content": str(result)
                                 })
+                            else:
+                                messages.append({
+                                    "role": "tool",
+                                    "tool_call_id": tool_call["id"],
+                                    "name": func_name,
+                                    "content": f"Error: Tool {func_name} not found."
+                                })
                         continue
                     else:
                         break
+                
+                if turn_count >= max_turns:
+                    log_error("Maximum autonomous turns reached. Pausing for safety.")
             
             log_brahmos(response.get('content', ''))
             

@@ -1,5 +1,6 @@
 import subprocess
 import os
+import shutil
 from rich.console import Console
 
 console = Console()
@@ -14,7 +15,8 @@ def run_shell(command, cli_name="BrahMos", cwd="Workspace"):
             # Ensure cwd exists
             os.makedirs(cwd, exist_ok=True)
             
-            shell_path = "/bin/bash" if os.path.exists("/bin/bash") else None
+            # Dynamically find the best shell (especially for Termux/Android)
+            shell_path = shutil.which("bash") or shutil.which("sh") or os.environ.get("SHELL")
             
             # Execute command inside the current working directory
             result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=120, executable=shell_path, cwd=cwd)

@@ -9,9 +9,9 @@ console = Console()
 def discuss_and_plan(topic=""):
     """Enters an interactive discussion mode with the user using gpt-4o to brainstorm and finalize a project plan. Returns the final plan."""
     # Local import to avoid circular dependencies
-    from config import MODEL_API_URL, MODEL_API_KEY
+    from config import MODEL_API_URL, MODEL_API_KEY, MODEL_NAME
     
-    title = "[bold magenta]🏛️ ARCHITECT MODE (GPT-4o)[/bold magenta]"
+    title = f"[bold magenta]🏛️ ARCHITECT MODE ({MODEL_NAME})[/bold magenta]"
     subtitle = "[white]Type 'done' to finalize plan or 'cancel' to abort.[/white]"
     
     panel = Panel(
@@ -44,7 +44,7 @@ def discuss_and_plan(topic=""):
 
     while True:
         payload = {
-            "model": "gpt-4o",
+            "model": MODEL_NAME,
             "messages": messages,
             "temperature": 0.7
         }
